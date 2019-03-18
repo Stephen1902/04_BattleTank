@@ -10,11 +10,7 @@ void ATankControllerAI_CPP::BeginPlay()
 	auto TankName = GetControlledTank();
 	if (!TankName)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tank not possessed"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AI tank possessed: %s"), *TankName->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("AI Tank not possessed"));
 	}
 }
 

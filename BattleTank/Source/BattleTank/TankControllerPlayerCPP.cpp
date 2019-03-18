@@ -11,11 +11,7 @@ void ATankControllerPlayerCPP::BeginPlay()
 	auto TankName = GetControlledTank();
 	if (!TankName)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Tank not possessed"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player tank possessed: %s"), *TankName->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Player Tank not possessed"));
 	}
 }
 
@@ -66,10 +62,7 @@ bool ATankControllerPlayerCPP::GetSightRayHitLocation(FVector& OutHitLocation) c
 		{
 			
 		}
-		else
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Nothing hit in range."));
-		}
+
 
 	}
 	
