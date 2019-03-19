@@ -1,6 +1,7 @@
 // Copyright 2019 DME Games - Written as part of the Udemy Unreal C++ Class
 
 #include "TankControllerAI_CPP.h"
+#include "Tank.h"
 #include "Engine/World.h"
 
 void ATankControllerAI_CPP::BeginPlay()

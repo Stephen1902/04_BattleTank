@@ -2,6 +2,7 @@
 
 #include "TankControllerPlayerCPP.h"
 #include "Engine/World.h"
+#include "Tank.h"
 // #include "BattleTank.h"
 
 void ATankControllerPlayerCPP::BeginPlay()
