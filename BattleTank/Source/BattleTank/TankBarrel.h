@@ -7,7 +7,7 @@
 #include "TankBarrel.generated.h"
 
 /**
- * Hold Paremeters for Barrel
+ * Variables and functions for elevating and lowering of barrel
  */
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
@@ -19,7 +19,7 @@ public:
 	void ElevateBarrel(float RelativeSpeed);
 
 	UPROPERTY(EditAnywhere, Category = "Set Up")
-	float MaxDegreesPerSecond = 5; // Tested value
+	float MaxDegreesPerSecond = 10; // Tested value
 
 	UPROPERTY(EditAnywhere, Category = "Set Up")
 	float  ElevationMax = 40; // Sensible beginning value

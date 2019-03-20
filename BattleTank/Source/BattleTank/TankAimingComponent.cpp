@@ -2,6 +2,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
@@ -14,6 +15,10 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
+}
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
@@ -22,7 +27,7 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	if (!Barrel) { return; }
+	if (!Barrel || !Turret) { return; }
 
 	FVector OutLaunchVelocity = { 0, 0, 0 };
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -45,6 +50,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
+		MoveTurretTowards(AimDirection);
 	}
 }
 
@@ -55,5 +61,14 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAtRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAtRotator - BarrelRotator;
 
-	Barrel->ElevateBarrel(DeltaRotator.Pitch); // TODO Remove Magic Number
+	Barrel->ElevateBarrel(DeltaRotator.Pitch);
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+{
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	auto AimAtRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAtRotator - TurretRotator;
+
+	Turret->RotateTurret(DeltaRotator.Yaw);
 }
