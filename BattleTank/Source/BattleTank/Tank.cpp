@@ -1,6 +1,8 @@
 // Copyright 2019 DME Games - Written as part of the Udemy Unreal C++ Class
 
 #include "Tank.h"
+#include "TankBarrel.h"
+#include "Projectile.h"
 #include "TankAimingComponent.h"
 #include "Engine/World.h"
 
@@ -17,6 +19,7 @@ ATank::ATank()
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
@@ -28,6 +31,18 @@ void ATank::FireProjectile()
 {
 	auto TimeNow = GetWorld()->GetRealTimeSeconds();
 	UE_LOG(LogTemp, Warning, TEXT("%f Projectile Fired"), TimeNow);
+
+	if (!Barrel) { return; }
+
+	auto SocketLocation = Barrel->GetSocketLocation(FName("Projectile"));
+	auto SocketRotation = Barrel->GetSocketRotation(FName("Projectile"));
+	// Spawn a projectile at the socket location of the barrel
+	GetWorld()->SpawnActor<AProjectile>(
+		ProjectileBluePrint,
+		SocketLocation,
+		SocketRotation
+		);
+
 }
 
 // Called when the game starts or when spawned
