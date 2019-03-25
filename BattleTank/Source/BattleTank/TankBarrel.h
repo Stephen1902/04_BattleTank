@@ -18,13 +18,13 @@ public:
 	// -1 is max downward movement, +1 is max up movement
 	void ElevateBarrel(float RelativeSpeed);
 
-	UPROPERTY(EditAnywhere, Category = "Set Up")
+	UPROPERTY(EditDefaultsOnly, Category = "Set Up")
 	float MaxDegreesPerSecond = 10; // Tested value
 
-	UPROPERTY(EditAnywhere, Category = "Set Up")
+	UPROPERTY(EditDefaultsOnly, Category = "Set Up")
 	float  ElevationMax = 40; // Sensible beginning value
 
-	UPROPERTY(EditAnywhere, Category = "Set Up")
+	UPROPERTY(EditDefaultsOnly, Category = "Set Up")
 	float ElevationMin = 0; // Sensible beginning value
 
 

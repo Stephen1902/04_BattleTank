@@ -16,11 +16,6 @@ UCLASS()
 class BATTLETANK_API ATankControllerAI_CPP : public AAIController
 {
 	GENERATED_BODY()
-	
-private:
-	ATank* GetControlledTank() const;
-
-	ATank* GetPlayerTank() const;
 
 // Called every frame
 	virtual void Tick(float DeltaTime) override;
