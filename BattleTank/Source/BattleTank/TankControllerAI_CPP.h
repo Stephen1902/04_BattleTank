@@ -8,9 +8,10 @@
 
 // Forward Declarations
 class ATank;
+class UTankMovementComponent;
 
 /**
- * 
+ A Controller for the AI thanks created or spawned into the world
  */
 UCLASS()
 class BATTLETANK_API ATankControllerAI_CPP : public AAIController
@@ -22,4 +23,14 @@ class BATTLETANK_API ATankControllerAI_CPP : public AAIController
 
 public:
 	virtual void BeginPlay() override;
+
+	// UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "Set up")
+	float AcceptanceRadius = 3000.f;  // TODO Find Acceptable Radius to stop movement
+
+	ATank* PlayerTank = nullptr;
+	ATank* AITank = nullptr;
 };

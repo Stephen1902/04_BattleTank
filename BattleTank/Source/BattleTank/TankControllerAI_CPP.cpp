@@ -3,23 +3,27 @@
 #include "TankControllerAI_CPP.h"
 #include "Tank.h"
 #include "Engine/World.h"
+#include "TankMovementComponent.h"
 
 void ATankControllerAI_CPP::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	AITank = Cast<ATank>(GetPawn());
 }
 
 void ATankControllerAI_CPP::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	auto AITank = Cast<ATank>(GetPawn());
-
 	if (PlayerTank && AITank)
 	{
-		// TODO Move Towards Player
+		// Move Towards Player
+		MoveToActor(
+			PlayerTank,
+			AcceptanceRadius
+		);
 		
 		// Aim Towards Player
 		AITank->AimAt(PlayerTank->GetActorLocation());

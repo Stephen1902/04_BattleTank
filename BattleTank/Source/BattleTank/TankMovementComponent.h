@@ -18,17 +18,18 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 	GENERATED_BODY()
 	
 public:
+	UFUNCTION(BlueprintCallable, Category = "Set Up")
+	void InitialiseTracks(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
+	
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendMoveForward(float Throw); // Throw is level from -1 to 1 that the analogue control is being pressed
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendTurnRight(float Throw); // Throw is level from -1 to 1 that the analogue control is being pressed
-
-	UFUNCTION(BlueprintCallable, Category = "Set Up")
-	void InitialiseTracks(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
-
+	
 private:
 	UTankTrack* LeftTrack;
 	UTankTrack* RightTrack;
 
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 };
