@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright 2019 DME Games - Written as part of the Udemy Unreal C++ Class
 
 #pragma once
 
@@ -8,9 +8,10 @@
 
 // Forward Declarations
 class ATank;
+class UTankAimingComponent;
 
 /**
- * 
+ * Responsible for helping the player aim.
  */
 UCLASS()
 class BATTLETANK_API ATankControllerPlayerCPP : public APlayerController
@@ -20,6 +21,9 @@ class BATTLETANK_API ATankControllerPlayerCPP : public APlayerController
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Set up")
 	ATank* GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Set up")
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 	virtual void BeginPlay() override;
