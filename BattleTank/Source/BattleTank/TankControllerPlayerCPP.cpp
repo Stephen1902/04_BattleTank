@@ -10,7 +10,7 @@ void ATankControllerPlayerCPP::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (AimingComponent)
 	{
 		FoundAimingComponent(AimingComponent);
@@ -20,7 +20,7 @@ void ATankControllerPlayerCPP::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("Aiming Component not found on Player Controller."));
 	}
 
-	auto TankName = GetControlledTank();
+	auto TankName = GetPawn();
 	if (!TankName)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player Tank not possessed"));
@@ -29,19 +29,13 @@ void ATankControllerPlayerCPP::BeginPlay()
 
 void ATankControllerPlayerCPP::Tick(float DeltaTime)
 {
-
 	Super::Tick(DeltaTime);
 	AimTowardsCrosshair();
 }
 
-ATank* ATankControllerPlayerCPP::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankControllerPlayerCPP::AimTowardsCrosshair()
 {
-	if (!ensure(GetControlledTank())) { return; }
+	if (!ensure(GetPawn())) { return; }
 
 	FVector HitLocation = { 1.f, 0.f, 1.f };  // OUT Parameter
 
@@ -49,7 +43,7 @@ void ATankControllerPlayerCPP::AimTowardsCrosshair()
 	if (GetSightRayHitLocation(HitLocation))
 	{
 // If linetrace hits landscape
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 // Aim barrel to linetrace location
 
 

@@ -9,6 +9,7 @@
 // Forward Declarations
 class ATank;
 class UTankMovementComponent;
+class UTankAimingComponent;
 
 /**
  A Controller for the AI thanks created or spawned into the world
@@ -30,7 +31,4 @@ public:
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Set up")
 	float AcceptanceRadius = 3000.f;  // TODO Find Acceptable Radius to stop movement
-
-	ATank* PlayerTank = nullptr;
-	ATank* AITank = nullptr;
 };

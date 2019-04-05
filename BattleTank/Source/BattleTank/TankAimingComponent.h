@@ -32,7 +32,7 @@ public:
 	UTankAimingComponent();
 
 	// Get location to aim turret and barrel at
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Enum State")
@@ -46,5 +46,8 @@ private:
 	// Required for barrel movement
 	UTankBarrel* Barrel = nullptr;
 	void MoveBarrelTowards(FVector AimDirection);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 100000;  // TODO Find sensible default
 
 };
