@@ -1,15 +1,8 @@
 // Copyright 2019 DME Games - Written as part of the Udemy Unreal C++ Class
 
 #include "Tank.h"
-#include "TankBarrel.h"
-#include "Projectile.h"
 #include "Engine/World.h"
 
-void ATank::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
 
 // Sets default values
 ATank::ATank()
@@ -18,23 +11,3 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void ATank::FireProjectile()
-{
-	if (!ensure(Barrel)) { return; }
-
-	bool bisReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-	if (bisReloaded)
-	{
-		auto SocketLocation = Barrel->GetSocketLocation(FName("Projectile"));
-		auto SocketRotation = Barrel->GetSocketRotation(FName("Projectile"));
-		// Spawn a projectile at the socket location of the barrel
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBluePrint,
-			SocketLocation,
-			SocketRotation
-			);
-
-//		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-	}
-}

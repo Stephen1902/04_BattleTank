@@ -34,7 +34,7 @@ void ATankControllerAI_CPP::Tick(float DeltaTime)
 		TankAimingComponent->AimAt(PlayerTank->GetActorLocation());
 
 		// Fire If Ready
-		// AITank->FireProjectile();
+		TankAimingComponent->FireProjectile();
 	}
 	
 }
