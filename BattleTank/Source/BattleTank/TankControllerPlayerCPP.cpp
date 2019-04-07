@@ -35,7 +35,7 @@ void ATankControllerPlayerCPP::Tick(float DeltaTime)
 
 void ATankControllerPlayerCPP::AimTowardsCrosshair()
 {
-	if (!ensure(GetPawn())) { return; }
+	if (!GetPawn()) { return; }
 
 	FVector HitLocation = { 1.f, 0.f, 1.f };  // OUT Parameter
 
