@@ -40,16 +40,15 @@ void ATankControllerPlayerCPP::AimTowardsCrosshair()
 	FVector HitLocation = { 1.f, 0.f, 1.f };  // OUT Parameter
 
 // Get world location through linetrace on crosshair
-	if (GetSightRayHitLocation(HitLocation))
-	{
+	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
+	if (bGotHitLocation)
+	{	
 // If linetrace hits landscape
 		AimingComponent->AimAt(HitLocation);
 // Aim barrel to linetrace location
 
 
 	}
-
-
 }
 
 bool ATankControllerPlayerCPP::GetSightRayHitLocation(FVector& OutHitLocation) const
@@ -64,15 +63,10 @@ bool ATankControllerPlayerCPP::GetSightRayHitLocation(FVector& OutHitLocation) c
 	if (DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldPosition, WorldDirection))
 	{
 		// Line Trace along the look direction and see what we hit (up to a max range)
-		if (GetLookVectorHitLocation(WorldDirection, OutHitLocation))
-		{
-			
-		}
-
-
+		return (GetLookVectorHitLocation(WorldDirection, OutHitLocation));
 	}
 	
-	return true;
+	return false;
 }
 
 bool ATankControllerPlayerCPP::GetLookVectorHitLocation(FVector WorldDirection, FVector& OutHitLocation) const

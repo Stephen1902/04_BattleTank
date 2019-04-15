@@ -28,7 +28,7 @@ public:
 	// UPROPERTY(BlueprintReadOnly)
 	UTankMovementComponent* TankMovementComponent = nullptr;
 
-private:
-	UPROPERTY(EditDefaultsOnly, Category = "Set up")
-	float AcceptanceRadius = 3000.f;  // TODO Find Acceptable Radius to stop movement
+protected:
+	UPROPERTY(EditAnywhere, Category = "Set up")
+	float AcceptanceRadius = 8000.f;  // TODO Find Acceptable Radius to stop movement
 };

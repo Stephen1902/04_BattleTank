@@ -26,7 +26,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	void IntendTurnRight(float Throw); // Throw is level from -1 to 1 that the analogue control is being pressed
-	
+
+
 private:
 	UTankTrack* LeftTrack;
 	UTankTrack* RightTrack;

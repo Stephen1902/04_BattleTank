@@ -55,7 +55,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	if (!ensure(Barrel && Turret)) { return; }
+	if (!ensure(Barrel)) { return; }
 	// Work out difference between current barrel rotation and AimDirection rotation
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAtRotator = AimDirection.Rotation();
@@ -72,17 +72,20 @@ void UTankAimingComponent::BeginPlay()
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (FiringState != EFiringState::OutOfAmmo)
 	{
-		FiringState = EFiringState::Reloading;
-	}
-	else if (!IsBarrelMoving())
-	{
-		FiringState = EFiringState::Aiming;
-	}
-	else
-	{
-		FiringState = EFiringState::Locked;
+		if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+		{
+			FiringState = EFiringState::Reloading;
+		}
+		else if (!IsBarrelMoving())
+		{
+			FiringState = EFiringState::Aiming;
+		}
+		else
+		{
+			FiringState = EFiringState::Locked;
+		}
 	}
 }
 
@@ -95,18 +98,26 @@ bool UTankAimingComponent::IsBarrelMoving()
 
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 {
-	if (!ensure(Barrel && Turret)) { return; }
+	if (!ensure(Turret)) { return; }
 
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAtRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimAtRotator - TurretRotator;
+	FRotator DeltaRotator = (AimAtRotator - TurretRotator);
 
-	Turret->RotateTurret(DeltaRotator.Yaw);
+	// Always rotate the shortest way to target
+	if (DeltaRotator.Yaw < 180)
+	{
+		Turret->RotateTurret(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->RotateTurret(-DeltaRotator.Yaw);
+	}
 }
 
 void UTankAimingComponent::FireProjectile()
 {
-	if (!ensure(Barrel)) { return; }
+	if (FiringState == EFiringState::OutOfAmmo) { return; }
 
 	if (FiringState != EFiringState::Reloading)
 	{
@@ -121,5 +132,16 @@ void UTankAimingComponent::FireProjectile()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		NumberOfAmmo--;
+		if (NumberOfAmmo == 0)
+		{
+			FiringState = EFiringState::OutOfAmmo;
+		}
 	}
+
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
 }
