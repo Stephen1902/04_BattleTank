@@ -105,7 +105,7 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 	FRotator DeltaRotator = (AimAtRotator - TurretRotator);
 
 	// Always rotate the shortest way to target
-	if (DeltaRotator.Yaw < 180)
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
 	{
 		Turret->RotateTurret(DeltaRotator.Yaw);
 	}
@@ -144,4 +144,9 @@ void UTankAimingComponent::FireProjectile()
 EFiringState UTankAimingComponent::GetFiringState() const
 {
 	return FiringState;
+}
+
+int UTankAimingComponent::GetAmmoRemaining() const
+{
+	return NumberOfAmmo;
 }

@@ -41,8 +41,8 @@ public:
 
 	EFiringState GetFiringState() const;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Fire")
-	int32 NumberOfAmmo = 3;
+	UFUNCTION(BlueprintCallable, Category = "Fire")
+	int GetAmmoRemaining() const;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Enum State")
@@ -75,4 +75,6 @@ private:
 	double LastFireTime = 0;
 
 	FVector AimDirection;
+
+	int32 NumberOfAmmo = 3;
 };
