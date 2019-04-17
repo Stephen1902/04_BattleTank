@@ -117,7 +117,7 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
 
 void UTankAimingComponent::FireProjectile()
 {
-	if (FiringState == EFiringState::OutOfAmmo) { return; }
+	if (FiringState == EFiringState::OutOfAmmo || ProjectileBluePrint == NULL) { return; }
 
 	if (FiringState != EFiringState::Reloading)
 	{

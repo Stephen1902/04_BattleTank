@@ -69,12 +69,13 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3.f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	int32 NumberOfAmmo = 3;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBluePrint;
 
 	double LastFireTime = 0;
 
 	FVector AimDirection;
-
-	int32 NumberOfAmmo = 3;
 };
